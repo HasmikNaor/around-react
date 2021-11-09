@@ -1,5 +1,6 @@
 import React from 'react';
 import plus from '../images/plus.svg';
+
 function PopupWithForm(props) {
   const close = () => {
     props.onClose();
@@ -10,16 +11,14 @@ function PopupWithForm(props) {
       close();
     }
   }
+
   const handleClickOnOverlayClose = (e) => {
-    const classes = e.target.className;
-    if (`popup popup_${props.name} popup_open` === classes) {
-      close();
-    }
+    close();
   }
 
   return (
     <div className={`popup popup_${props.name} ` + (props.isOpen && 'popup_open')} onClick={handleClickOnOverlayClose} onKeyDown={handleEscClose} tabIndex="0">
-      <div className="popup__content">
+      <div className="popup__content" onClick={e => e.stopPropagation()}>
         <button className={`popup__close-btn popup__close-btn_${props.name}`} onClick={close}>
           <img src={plus} alt="close-btn" className="popup__close-btn-img" />
         </button>
@@ -32,4 +31,5 @@ function PopupWithForm(props) {
     </div>
   )
 }
+
 export default PopupWithForm;

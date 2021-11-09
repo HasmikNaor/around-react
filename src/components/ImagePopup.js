@@ -1,4 +1,4 @@
-import plus from '../images/plus.svg';
+import plusIcon from '../images/plus.svg';
 
 function ImagePopup(props) {
   const close = () => {
@@ -10,17 +10,16 @@ function ImagePopup(props) {
       close();
     }
   }
+
   const handleClickOnOverlayClose = (e) => {
-    const classes = e.target.className;
-    if (`popup popup_image popup_open` === classes) {
-      close();
-    }
+    close()
   }
+
   return (
     <div className={`popup popup_image ` + (props.isOpen && 'popup_open')} onClick={handleClickOnOverlayClose} onKeyDown={handleEscClose} tabIndex="0">
-      <figure className="popup__figure">
+      <figure className="popup__figure" onClick={e => e.stopPropagation()}>
         <button className="popup__close-btn">
-          <img src={plus} alt="close-image" className="popup__close-btn-img" onClick={props.onClose} />
+          <img src={plusIcon} alt="close-image" className="popup__close-btn-img" onClick={props.onClose} />
         </button>
         <img alt={props.card.name} className="popup__image" src={props.card.link} />
         <figcaption className="popup__caption">{props.card.name}</figcaption>
@@ -28,4 +27,5 @@ function ImagePopup(props) {
     </div>
   )
 }
+
 export default ImagePopup;
