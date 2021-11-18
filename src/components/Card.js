@@ -1,9 +1,9 @@
 import trashIcon from '../images/trash.svg';
-import CurrentUserContext from '../contexts/CurrentUserContexts'
+import currentUser from '../contexts/CurrentUserContext'
 import { useContext, useState } from 'react';
 
 function Card(props) {
-  const currentUser = useContext(CurrentUserContext);
+  const user = useContext(currentUser);
   const isOwn = props.card.owner._id === currentUser._id;
 
   const [isLiked, setIsLiked] = useState(props.card.likes.some(i => i._id === currentUser._id));

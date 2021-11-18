@@ -1,12 +1,11 @@
 import plusIcon from '../images/plus.svg';
 import edit from '../images/edit.svg';
-// import { api } from '../utils/api';
 import { useContext } from 'react';
 import Card from './Card';
-import CurrentUserContext from '../contexts/CurrentUserContexts';
+import currentUser from '../contexts/CurrentUserContext';
 
 function Main(props) {
-  const user = useContext(CurrentUserContext)
+  const user = useContext(currentUser)
 
   return (
     <main className="main">

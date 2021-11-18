@@ -8,7 +8,7 @@ import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
-import CurrentUserContext from '../contexts/CurrentUserContexts';
+import currentUser from '../contexts/CurrentUserContext';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -20,13 +20,13 @@ function App() {
     name: '',
     id: ''
   });
-  const [currentUser, setCurrentUser] = useState({});
+  const [user, setUser] = useState({});
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
     api.getUserInfo()
       .then((res) => {
-        setCurrentUser(res)
+        setUser(res)
       })
       .catch((error) => console.log(error))
 
@@ -61,13 +61,13 @@ function App() {
 
   const handleUpdateUser = ({ name, about }) => {
     api.setUserData(name, about)
-      .then((res) => setCurrentUser(res))
+      .then((res) => setUser(res))
       .catch(error => console.log(error))
   }
 
   const handleUpdateAvatar = ({ avatar }) => {
     api.updateAvatar(avatar)
-      .then((res) => setCurrentUser(res))
+      .then((res) => setUser(res))
       .catch(error => console.log(error))
   }
 
@@ -105,7 +105,7 @@ function App() {
   }
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <currentUser.Provider value={user}>
       <div className="body">
         <div className="page">
           <Header />
@@ -125,7 +125,7 @@ function App() {
           <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpen={isImagePopupOpen} />
         </div>
       </div>
-    </CurrentUserContext.Provider>
+    </currentUser.Provider>
   );
 }
 export default App;
