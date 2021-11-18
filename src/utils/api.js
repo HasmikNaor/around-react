@@ -42,6 +42,7 @@ class Api {
       method: 'PUT',
     })
   }
+
   deleteLike(cardId) {
     return customFetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
@@ -56,6 +57,7 @@ class Api {
       body: JSON.stringify({ avatar })
     })
   }
+
   setUserData(name, job) {
     return customFetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
