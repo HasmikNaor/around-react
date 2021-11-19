@@ -8,7 +8,7 @@ import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
-import currentUser from '../contexts/CurrentUserContext';
+import CurrentUser from '../contexts/CurrentUserContext';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -61,19 +61,28 @@ function App() {
 
   const handleUpdateUser = ({ name, about }) => {
     api.setUserData(name, about)
-      .then((res) => setUser(res))
+      .then((res) => {
+        setUser(res);
+        closeAllPopups();
+      })
       .catch(error => console.log(error))
   }
 
   const handleUpdateAvatar = ({ avatar }) => {
     api.updateAvatar(avatar)
-      .then((res) => setUser(res))
+      .then((res) => {
+        setUser(res);
+        closeAllPopups();
+      })
       .catch(error => console.log(error))
   }
 
   const handleAddPlaceSubmit = (data) => {
     api.createCard(data)
-      .then((newCard) => setCards([newCard, ...cards]))
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
       .catch(error => console.log(error))
   }
 
@@ -88,6 +97,7 @@ function App() {
     if (isOwn)
       api.deleteCard(card._id)
         .then(() => setCards(cards => cards.filter(c => c._id !== card._id)))
+        .catch(error => console.log(error))
   }
 
   const handleCardLike = (card, isLiked) => {
@@ -105,7 +115,7 @@ function App() {
   }
 
   return (
-    <currentUser.Provider value={user}>
+    <CurrentUser.Provider value={user}>
       <div className="body">
         <div className="page">
           <Header />
@@ -125,7 +135,7 @@ function App() {
           <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpen={isImagePopupOpen} />
         </div>
       </div>
-    </currentUser.Provider>
+    </CurrentUser.Provider>
   );
 }
 export default App;
