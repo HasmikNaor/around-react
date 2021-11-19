@@ -52,6 +52,7 @@ function App() {
 
   const handleCardClick = (card) => {
     setIsImagePopupOpen(true);
+    console.log(card)
     setSelectedCard({
       link: card.link,
       name: card.name,
